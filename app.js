@@ -50,16 +50,31 @@ addFriendButton.addEventListener('click', () => {
 
 function displayFriends() {
     // clear out the friends in DOM
+    friendsEl.textContent = '';
 
     // for each friend in state . . .
     for (let friend of friendData) {
         // use renderFriend to make a friendEl
+        const friendEl = renderFriend(friend);
         // this is a clickable list, so . . .
-        //     add an event listener to each friend
-        //         and if the friend's satisfaction level is below 3 and you have mushrooms left
-        //             increment the friends satisfaction and decrement your mushrooms
-        //             then display your friends and mushrooms with the updated state
+        friendEl.addEventListener('click', () => {
+            // add an event listener to each friend
+            const friendInState = findFriendByName(friend.name, friendData);
+            // and if the friend's satisfaction level is below 3 and you have mushrooms left
+            if (mushroomCount === 0) {
+                alert('no mushrooms left! go forage for some more');
+            }
+            if (mushroomCount > 0 && friendInState.satisfaction < 3) {
+                // increment the friends satisfaction and decrement your mushrooms
+                friendInState.satisfaction++;
+                mushroomCount--;
+                // then display your friends and mushrooms with the updated state
+                displayFriends();
+                displayMushrooms();
+            }
+        });
         // append the friendEl to the friends list in DOM
+        friendsEl.append(friendEl);
     }
 }
 
@@ -72,6 +87,14 @@ function displayMushrooms() {
         const mushroomEl = renderMushroom();
 
         mushroomsEl.append(mushroomEl);
+    }
+}
+
+function findFriendByName(name, friends) {
+    for (let friend of friends) {
+        if (friend.name === name) {
+            return friend;
+        }
     }
 }
 
