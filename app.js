@@ -58,7 +58,11 @@ function displayFriends() {
         friendEl.addEventListener('click', () => {
             const friendInState = findFriendByName(friend.name, friendData);
 
-            if (mushroomCount === 0) {
+            if (friendInState.satisfaction === 3) {
+                alert(
+                    `${friendInState.name} is good on shrooms right now, but it's kind of you to offer!`
+                );
+            } else if (mushroomCount === 0) {
                 alert('no mushrooms left! go forage for some more');
             }
             if (mushroomCount > 0 && friendInState.satisfaction < 3) {
