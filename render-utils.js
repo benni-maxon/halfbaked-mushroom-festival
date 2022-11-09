@@ -8,6 +8,14 @@ export function renderMushroom() {
     return div;
 }
 
+function findShroomByName(name, shrooms) {
+    for (let shroom of shrooms) {
+        if (shroom.name === name) {
+            return shroom;
+        }
+    }
+}
+
 export function renderFriend(friend) {
     const div = document.createElement('div');
     const nameEl = document.createElement('p');
